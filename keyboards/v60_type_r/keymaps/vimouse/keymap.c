@@ -137,5 +137,14 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
 
 
 void led_set_user(uint8_t usb_led) {
-
+    if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
+        // output low
+        DDRE  |=  (1<<PE6);
+        PORTE &= ~(1<<PE6);
+    }
+    else {
+        // Hi-Z
+        DDRE  &= ~(1<<PE6);
+        PORTE &= ~(1<<PE6);
+    }
 }
